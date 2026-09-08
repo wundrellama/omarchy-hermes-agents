@@ -1,0 +1,15 @@
+#!/bin/bash
+set -euo pipefail
+
+root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+cache=$(mktemp -d)
+trap 'rm -rf "$cache"' EXIT
+export PYTHONPYCACHEPREFIX="$cache"
+
+status=0
+for test in "$root"/test/shell.d/*-test.sh; do
+  [[ ${test##*/} == "base-test.sh" ]] && continue
+  printf '\n== %s ==\n' "${test##*/}"
+  bash "$test" || status=1
+done
+exit "$status"
