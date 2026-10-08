@@ -13,11 +13,11 @@ Panel {
 
   readonly property string meterExecutable: decodeURIComponent(Qt.resolvedUrl("bin/omarchy-agent-meter").toString().replace(/^file:\/\//, ""))
 
-  readonly property color foreground: bar ? bar.foreground : Color.foreground
-  readonly property color urgent: bar ? bar.urgent : Color.urgent
+  readonly property color foreground: bar ? bar.foreground : ShellColor.foreground
+  readonly property color urgent: bar ? bar.urgent : ShellColor.urgent
   readonly property color dim: Qt.darker(foreground, 1.55)
-  readonly property color surface: Color.popups.background
-  readonly property color track: Style.selectedFillFor(foreground, Color.accent)
+  readonly property color surface: ShellColor.popups.background
+  readonly property color track: Style.selectedFillFor(foreground, ShellColor.accent)
   readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
 
   readonly property var providers: usage.enabledProviders
@@ -347,7 +347,7 @@ Panel {
   function iconCandidatesForProvider(p, surfaceColor) {
     if (!p) return []
     var candidates = []
-    if (colorLuminance(surfaceColor || Color.background) >= 0.5)
+    if (colorLuminance(surfaceColor || ShellColor.background) >= 0.5)
       candidates.push(Qt.resolvedUrl("assets/" + p.providerId + "-light.svg"))
     candidates.push(Qt.resolvedUrl("assets/" + p.providerId + ".svg"))
     return candidates
@@ -718,7 +718,7 @@ Panel {
                 width: parent.width
                 placeholderText: "Gateway URL · http://192.168.1.50:9119"
                 foreground: root.foreground
-                accent: Color.accent
+                accent: ShellColor.accent
                 enabled: !gatewayLoginProcess.running
                 onAccepted: gatewayUsername.forceActiveFocus()
                 Keys.onEscapePressed: {
@@ -733,7 +733,7 @@ Panel {
                 width: parent.width
                 placeholderText: "Username"
                 foreground: root.foreground
-                accent: Color.accent
+                accent: ShellColor.accent
                 enabled: !gatewayLoginProcess.running
                 onAccepted: gatewayPassword.forceActiveFocus()
                 Keys.onEscapePressed: {
@@ -749,7 +749,7 @@ Panel {
                 password: true
                 placeholderText: "Password"
                 foreground: root.foreground
-                accent: Color.accent
+                accent: ShellColor.accent
                 enabled: !gatewayLoginProcess.running
                 onAccepted: root.submitGatewayLogin()
                 Keys.onEscapePressed: {
