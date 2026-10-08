@@ -3,6 +3,7 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Io
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 Panel {
@@ -13,11 +14,11 @@ Panel {
 
   readonly property string meterExecutable: decodeURIComponent(Qt.resolvedUrl("bin/omarchy-agent-meter").toString().replace(/^file:\/\//, ""))
 
-  readonly property color foreground: bar ? bar.foreground : ShellColor.foreground
-  readonly property color urgent: bar ? bar.urgent : ShellColor.urgent
+  readonly property color foreground: bar ? bar.foreground : Commons.Color.foreground
+  readonly property color urgent: bar ? bar.urgent : Commons.Color.urgent
   readonly property color dim: Qt.darker(foreground, 1.55)
-  readonly property color surface: ShellColor.popups.background
-  readonly property color track: Style.selectedFillFor(foreground, ShellColor.accent)
+  readonly property color surface: Commons.Color.popups.background
+  readonly property color track: Style.selectedFillFor(foreground, Commons.Color.accent)
   readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
 
   readonly property var providers: usage.enabledProviders
@@ -347,7 +348,7 @@ Panel {
   function iconCandidatesForProvider(p, surfaceColor) {
     if (!p) return []
     var candidates = []
-    if (colorLuminance(surfaceColor || ShellColor.background) >= 0.5)
+    if (colorLuminance(surfaceColor || Commons.Color.background) >= 0.5)
       candidates.push(Qt.resolvedUrl("assets/" + p.providerId + "-light.svg"))
     candidates.push(Qt.resolvedUrl("assets/" + p.providerId + ".svg"))
     return candidates
@@ -718,7 +719,7 @@ Panel {
                 width: parent.width
                 placeholderText: "Gateway URL · http://192.168.1.50:9119"
                 foreground: root.foreground
-                accent: ShellColor.accent
+                accent: Commons.Color.accent
                 enabled: !gatewayLoginProcess.running
                 onAccepted: gatewayUsername.forceActiveFocus()
                 Keys.onEscapePressed: {
@@ -733,7 +734,7 @@ Panel {
                 width: parent.width
                 placeholderText: "Username"
                 foreground: root.foreground
-                accent: ShellColor.accent
+                accent: Commons.Color.accent
                 enabled: !gatewayLoginProcess.running
                 onAccepted: gatewayPassword.forceActiveFocus()
                 Keys.onEscapePressed: {
@@ -749,7 +750,7 @@ Panel {
                 password: true
                 placeholderText: "Password"
                 foreground: root.foreground
-                accent: ShellColor.accent
+                accent: Commons.Color.accent
                 enabled: !gatewayLoginProcess.running
                 onAccepted: root.submitGatewayLogin()
                 Keys.onEscapePressed: {
